@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Shopping Cart</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
+   <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+
+   <section>
+      <div class="container">
+         <div class="cart">
+            <div class="col-md-12 col-lg-10 mx-auto">
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item">
+                        <img src="images/product-1.png" alt="">
+                        <h5>iPhone 11 128GB Black</h5>
+                     </div>
+
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button id="iphone-subtract" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="iphone-total" type="text" class="form-control text-center" value="1">
+                           <button id="iphone-add" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <h5>$<span id="iphone-value">1,219</span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item mx-auto">
+                        <img src="images/product-2.png" alt="">
+                        <h5>iPhone 11 Silicone Case - Black</h5>
+                     </div>
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button id="case-subtract" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="case-total" type="text" class="form-control text-center" value="1">
+                           <button id="case-add" class="btn btn-default"><i class="fas fa-plus"></i></button>
+
+                        </div>
+                        <h5>$ <span id="case-value">59</span> </h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+
+                     <div class="col-md-8">
+                        <h5>Subtotal: </h5>
+                        <h5>Tax:</h5>
+                        <h5>Total:</h5>
+                     </div>
+
+                     <div class="col-md-4 status">
+                        <h5>$ <span id="subtotal">1,278</span></h5>
+                        <h5>$ <span id="vat">0</span></h5>
+                        <h5>$ <span id="total">1,278</span></h5>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-12 pt-4 pb-4">
+                  <button type="button" class="btn btn-success check-out">Check Out</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <script>
+
+
+      function CalculateValue( m,n ){
+         var k=m*n;
+         if(n==1219)document.getElementById('iphone-value').innerHTML=k.toLocaleString();
+         if(n==59)document.getElementById('case-value').innerHTML=k.toLocaleString();
+         return k;
+      }
+
+      function checkout(){
+         const subtotalValue= totalCostIphone+totalCostCase;
+         const vatValue=Math.round(subtotalValue*.15);
+         const totalValue=subtotalValue+vatValue;
+
+         subtotal.innerHTML=subtotalValue.toLocaleString();
+         vat.innerHTML=vatValue.toLocaleString();
+         total.innerHTML=totalValue.toLocaleString();
+      }
+      
+      
+      const PhoneAddBtn=document.getElementById('iphone-add');
+      const CaseAddBtn=document.getElementById('case-add');
+      const PhoneSubBtn=document.getElementById('iphone-subtract');
+      const CaseSubBtn=document.getElementById('case-subtract');
+
+      const Iphone=document.getElementById('iphone-total');
+      const totalCase=document.getElementById('case-total');
+
+      var subtotal=document.getElementById('subtotal');
+      var total = document.getElementById('total');
+      var vat= document.getElementById('vat');
+      var totalCostIphone=1219,totalCostCase=59;
+
+      Iphone.value=1;
+      totalCase.value=1;
+      
+
+      PhoneAddBtn.addEventListener('click',function(){
+         const numIphone=parseFloat(Iphone.value);
+         Iphone.value= numIphone+1;
+         totalCostIphone=CalculateValue(numIphone+1,1219);
+         checkout();
+      })
+
+      PhoneSubBtn.addEventListener('click',function(){
+         const numIphone=parseFloat(Iphone.value);
+         if(numIphone>0){
+            Iphone.value= numIphone-1;
+            totalCostIphone=CalculateValue(numIphone-1,1219);
+         }
+         checkout();
+      })
+      
+      CaseAddBtn.addEventListener('click',function(){
+         const numCase=parseFloat(totalCase.value);
+         totalCase.value= numCase+1;
+         totalCostCase=CalculateValue(numCase+1,59);
+         checkout();
+      })
+      
+      CaseSubBtn.addEventListener('click',function(){
+         const numCase=parseFloat(totalCase.value);
+         if(numCase>0){
+            totalCase.value= numCase-1;
+            totalCostCase=CalculateValue(numCase-1,59);
+         }
+         checkout();
+      })
+
+
+
+
+   </script>
+
+</body>
+
+</html>
